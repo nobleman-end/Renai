@@ -8,12 +8,12 @@ import { buildNativeFlow } from "./Interactive/NativeFlow"
 
 export const generateButtonMessage = (
 	message: ButtonMessage,
-	header?: InteractiveHeader
+	media?: HeaderMedia
 ) => {
 
 	return proto.Message.InteractiveMessage.create({
 
-		header: header?.header,
+		header: buildHeader(message, media),
 
 		body: buildBody(message.text),
 
