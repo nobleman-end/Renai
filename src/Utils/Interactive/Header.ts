@@ -1,7 +1,22 @@
 import { proto } from "../../../WAProto"
+import { ButtonMessage } from "../../Types/Button"
 
-export const buildHeader = () => {
+export const buildHeader = (
+	message: ButtonMessage
+) => {
 
-	return undefined
+	if(
+		!message.image &&
+		!message.video &&
+		!message.document
+	) {
+		return undefined
+	}
+
+	return proto.Message.InteractiveMessage.Header.create({
+
+		title: message.title
+
+	})
 
 }
