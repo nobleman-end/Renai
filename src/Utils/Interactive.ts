@@ -1,28 +1,23 @@
 import { proto } from "../../WAProto"
 import { ButtonMessage } from "../Types/Button"
-
+import { buildBody } from "./Interactive/Body"
+import { buildFooter } from "./Interactive/Footer"
+import { buildHeader } from "./Interactive/Header"
+import { buildNativeFlow } from "./Interactive/NativeFlow"
 export const generateButtonMessage = (
 	message: ButtonMessage
 ) => {
 
 	return proto.Message.InteractiveMessage.create({
 
-		body: {
-			text: message.text
-		},
+	header: buildHeader(),
 
-		footer: message.footer
-			? {
-				text: message.footer
-			}
-			: undefined,
+	body: buildBody(message.text),
 
-		nativeFlowMessage: {
+	footer: buildFooter(message.footer),
 
-			buttons: message.buttons
+	nativeFlowMessage: buildNativeFlow(message.buttons)
 
-		}
-
-	})
+})
 
 }
