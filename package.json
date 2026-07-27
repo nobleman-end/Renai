@@ -1,5 +1,5 @@
 {
-  "name": "Renai",
+  "name": "@nobleman-end/Renai",
   "type": "module",
   "version": "6.7.21-Renai.1",
   "description": "A WebSockets library for interacting with WhatsApp Web",
