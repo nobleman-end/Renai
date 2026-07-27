@@ -1,6 +1,3 @@
-import {
-	buildButtons
-} from "../Utils/Button"
 import NodeCache from '@cacheable/node-cache'
 import { Boom } from '@hapi/boom'
 import { proto } from '../../WAProto/index.js'
@@ -72,6 +69,9 @@ import {
 } from '../WABinary'
 import { USyncQuery, USyncUser } from '../WAUSync'
 import { makeNewsletterSocket } from './newsletter'
+import {
+	buildButtons
+} from "../Utils/Button"
 
 export const makeMessagesSocket = (config: SocketConfig) => {
 	const {
