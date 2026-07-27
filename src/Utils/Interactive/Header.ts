@@ -28,7 +28,7 @@ export const buildHeader = (
 
 		title: message.title,
 
-		imageMessage: media?.imageMessage,
+		imageMessage: media?.imageMessage ?? media,
 
 		videoMessage: media?.videoMessage,
 
