@@ -1,3 +1,4 @@
+import type { Decipheriv } from "crypto"
 import { Boom } from '@hapi/boom'
 import { exec } from 'child_process'
 import * as Crypto from 'crypto'
@@ -595,7 +596,7 @@ export const downloadEncryptedContent = async (
 
 	let remainingBytes = Buffer.from([])
 
-	let aes: Crypto.Decipher
+	let aes: Decipheriv
 
 	const pushBytes = (bytes: Buffer, push: (bytes: Buffer) => void) => {
 		if (startByte || endByte) {
