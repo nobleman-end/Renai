@@ -1,6 +1,57 @@
 import {
+	Button,
 	ButtonMessage
-} from '../Types/Button'
+} from "../Types/Button"
+
+const buildNativeButton = (
+	button: Button
+) => {
+
+	switch(button.type) {
+
+		case "quick_reply":
+
+			return {
+				name: "quick_reply",
+				buttonParamsJson: JSON.stringify({
+					display_text: button.text,
+					id: button.id
+				})
+			}
+
+		case "url":
+
+			return {
+				name: "cta_url",
+				buttonParamsJson: JSON.stringify({
+					display_text: button.text,
+					url: button.url
+				})
+			}
+
+		case "copy":
+
+			return {
+				name: "cta_copy",
+				buttonParamsJson: JSON.stringify({
+					display_text: button.text,
+					copy_code: button.copy
+				})
+			}
+
+		case "call":
+
+			return {
+				name: "cta_call",
+				buttonParamsJson: JSON.stringify({
+					display_text: button.text,
+					phone_number: button.phoneNumber
+				})
+			}
+
+	}
+
+}
 
 export const buildButtons = (
 	options: ButtonMessage
@@ -58,6 +109,14 @@ export const buildButtons = (
 
 	}
 
-	return options
+	
+
+	return {
+
+	...options,
+
+	buttons: options.buttons.map(buildNativeButton)
+
+}
 
 }
