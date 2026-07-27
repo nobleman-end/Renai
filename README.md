@@ -126,6 +126,191 @@ This project is licensed under the MIT License.
 
 ---
 
+# 🔑 Custom Pairing Code
+
+Renai supports requesting a **custom 8-character pairing code** instead of using a randomly generated code.
+
+> [!NOTE]
+> This feature is exclusive to Renai and is not available in the official Baileys.
+
+---
+
+## Installation
+
+Nothing special is required.
+
+```ts
+import { makeWASocket } from "@renai/baileys"
+```
+
+---
+
+## Default Pairing Code
+
+If no custom code is provided, Renai behaves exactly like Baileys.
+
+```ts
+const code = await sock.requestPairingCode("628123456789")
+console.log(code)
+```
+
+Example Output
+
+```text
+ABCD1234
+```
+
+---
+
+## Custom Pairing Code
+
+Pass a second argument containing **exactly 8 characters**.
+
+```ts
+const code = await sock.requestPairingCode(
+    "628123456789",
+    "RENAI12"
+)
+
+console.log(code)
+```
+
+Output
+
+```text
+RENAI12
+```
+
+---
+
+## Requirements
+
+The custom pairing code:
+
+- Must contain exactly **8 characters**
+- Is case-sensitive
+- Cannot be empty
+
+Valid examples
+
+```text
+RENAI12
+ABCD1234
+PAIR2026
+MYCODE88
+```
+
+Invalid examples
+
+```text
+ABC
+ABCDEFGHI
+```
+
+---
+
+## Error
+
+If the pairing code length is not exactly 8 characters:
+
+```ts
+await sock.requestPairingCode(
+    "628123456789",
+    "ABC"
+)
+```
+
+Renai throws
+
+```text
+Error: Custom pairing code must be exactly 8 characters
+```
+
+---
+
+## API
+
+### requestPairingCode()
+
+```ts
+requestPairingCode(
+    phoneNumber: string,
+    customPairingCode?: string
+): Promise<string>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| phoneNumber | string | ✅ | WhatsApp phone number |
+| customPairingCode | string | ❌ | Custom 8-character pairing code |
+
+### Returns
+
+Returns the pairing code used for authentication.
+
+```ts
+const code = await sock.requestPairingCode(
+    "628123456789",
+    "RENAI12"
+)
+```
+
+Returns
+
+```text
+RENAI12
+```
+
+---
+
+## Compatibility
+
+This feature is fully backward compatible.
+
+Existing code continues to work.
+
+```ts
+await sock.requestPairingCode(phoneNumber)
+```
+
+New usage
+
+```ts
+await sock.requestPairingCode(
+    phoneNumber,
+    "RENAI12"
+)
+```
+
+---
+
+## Example
+
+```ts
+import {
+    makeWASocket,
+    useMultiFileAuthState
+} from "@renai/baileys"
+
+const { state, saveCreds } =
+    await useMultiFileAuthState("./session")
+
+const sock = makeWASocket({
+    auth: state
+})
+
+sock.ev.on("creds.update", saveCreds)
+
+const code = await sock.requestPairingCode(
+    "628123456789",
+    "RENAI12"
+)
+
+console.log("Pairing Code:", code)
+```
+
 <div align="center">
 
 Made with ❤️ by **Ren-AI**
