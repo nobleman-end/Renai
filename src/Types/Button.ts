@@ -44,6 +44,20 @@ export interface ButtonMessage {
 
 	footer?: string
 
+	title?: string
+
+	image?: Buffer | string
+
+	video?: Buffer | string
+
+	document?: Buffer | string
+
+	mimetype?: string
+
+	fileName?: string
+
+	jpegThumbnail?: Buffer
+
 	buttons: Button[]
 
 }
