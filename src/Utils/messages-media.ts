@@ -1,7 +1,6 @@
-
 import { Boom } from '@hapi/boom'
 import { exec } from 'child_process'
-import * as Crypto from 'crypto'
+import * as crypto from "node:crypto"
 import { once } from 'events'
 import { createReadStream, createWriteStream, promises as fs, WriteStream } from 'fs'
 import type { Agent } from 'https'
@@ -56,7 +55,7 @@ export const getRawMediaUploadData = async (media: WAMediaUpload, mediaType: Med
 	const { stream } = await getStream(media)
 	logger?.debug('got stream for raw upload')
 
-	const hasher = Crypto.createHash('sha256')
+	const hasher = crypto.createHash('sha256')
 	const filePath = join(tmpdir(), mediaType + generateMessageIDV2())
 	const fileWriteStream = createWriteStream(filePath)
 
@@ -392,7 +391,7 @@ export const encryptedStream = async (
 
 	logger?.debug('fetched media stream')
 
-	const mediaKey = Crypto.randomBytes(32)
+	const mediaKey = crypto.randomBytes(32)
 	const { cipherKey, iv, macKey } = await getMediaKeys(mediaKey, mediaType)
 
 	const encFilePath = join(getTmpFilesDirectory(), mediaType + generateMessageIDV2() + '-enc')
@@ -407,10 +406,10 @@ export const encryptedStream = async (
 	}
 
 	let fileLength = 0
-	const aes = Crypto.createCipheriv('aes-256-cbc', cipherKey, iv)
-	const hmac = Crypto.createHmac('sha256', macKey!).update(iv)
-	const sha256Plain = Crypto.createHash('sha256')
-	const sha256Enc = Crypto.createHash('sha256')
+	const aes = crypto.createCipheriv('aes-256-cbc', cipherKey, iv)
+	const hmac = crypto.createHmac('sha256', macKey!).update(iv)
+	const sha256Plain = crypto.createHash('sha256')
+	const sha256Enc = crypto.createHash('sha256')
 
 	const onChunk = async (buff: Buffer) => {
 		sha256Enc.update(buff)
@@ -626,7 +625,7 @@ export const downloadEncryptedContent = async (
 					data = data.slice(AES_CHUNK_SIZE)
 				}
 
-				aes = Crypto.createDecipheriv('aes-256-cbc', cipherKey, ivValue)
+				aes = crypto.createDecipheriv('aes-256-cbc', cipherKey, ivValue)
 				// if an end byte that is not EOF is specified
 				// stop auto padding (PKCS7) -- otherwise throws an error for decryption
 				if (endByte) {
@@ -910,7 +909,7 @@ export const encryptMediaRetryRequest = (key: WAMessageKey, mediaKey: Buffer | U
 	const recp: proto.IServerErrorReceipt = { stanzaId: key.id }
 	const recpBuffer = proto.ServerErrorReceipt.encode(recp).finish()
 
-	const iv = Crypto.randomBytes(12)
+	const iv = crypto.randomBytes(12)
 	const retryKey = getMediaRetryKey(mediaKey)
 	const ciphertext = aesEncryptGCM(recpBuffer, retryKey, iv, Buffer.from(key.id!))
 
