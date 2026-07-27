@@ -20,3 +20,4 @@ export * from './companion-reg-client-utils'
 export * from './identity-change-handler'
 export * from './stanza-ack'
 export * from "./Button"
+export * from "./Interactive"
