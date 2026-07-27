@@ -1,3 +1,6 @@
+import {
+	buildButtons
+} from "../Utils/Button"
 import NodeCache from '@cacheable/node-cache'
 import { Boom } from '@hapi/boom'
 import { proto } from '../../WAProto/index.js'
@@ -1258,6 +1261,25 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 		}
 	})
 
+	// + HELPER BUTTON
+
+	const sendButton = async (
+	jid: string,
+	message: ButtonMessage,
+	options: MiscMessageGenerationOptions = {}
+) => {
+
+	const data = buildButtons(message)
+
+	return await sendMessage(
+		jid,
+		data as any,
+		options
+	)
+
+}
+	// HERE
+
 	return {
 		...sock,
 		userDevicesCache,
@@ -1266,6 +1288,8 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 		assertSessions,
 		relayMessage,
 		sendReceipt,
+		sendMessage,
+		sendButton, // + PENAMBAHAN sendButton & sendMessage
 		sendReceipts,
 		readMessages,
 		refreshMediaConn,
