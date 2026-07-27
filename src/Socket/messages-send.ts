@@ -70,9 +70,9 @@ import {
 import { USyncQuery, USyncUser } from '../WAUSync'
 import { makeNewsletterSocket } from './newsletter'
 import {
-	buildButtons
-} from "../Utils/Button"
-
+	buildButtons,
+	generateButtonMessage
+} from "../Utils"
 export const makeMessagesSocket = (config: SocketConfig) => {
 	const {
 		logger,
@@ -1271,11 +1271,19 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 
 	const data = buildButtons(message)
 
-	return await sendMessage(
-		jid,
-		data as any,
-		options
-	)
+const interactive = generateButtonMessage(data)
+
+return await sendMessage(
+	jid,
+	{
+		viewOnceMessage: {
+			message: {
+				interactiveMessage: interactive
+			}
+		}
+	} as any,
+	options
+)
 
 }
 	// HERE
