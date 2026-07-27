@@ -10,7 +10,7 @@ export const generateButtonMessage = (
 
 	return proto.Message.InteractiveMessage.create({
 
-	header: buildHeader(),
+	header: buildHeader(message),
 
 	body: buildBody(message.text),
 
