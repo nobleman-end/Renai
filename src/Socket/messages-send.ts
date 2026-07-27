@@ -1271,7 +1271,29 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 
 	const data = buildButtons(message)
 
-const interactive = generateButtonMessage(data)
+		let media
+		if(data.image) {
+
+	media = await prepareWAMessageMedia(
+
+		{
+			image: data.image
+		},
+
+		{
+			upload
+		}
+
+	)
+
+}
+
+const interactive = generateButtonMessage(
+
+	data,
+
+	media
+)
 
 return await sendMessage(
 	jid,
