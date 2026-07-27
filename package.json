@@ -1,7 +1,7 @@
 {
-  "name": "@renai/baileys",
+  "name": "@nobleman/renai",
   "version": "6.7.21-renai.1.0.0",
-  "description": "Lloren Baileys - A fork of Baileys with additional features and fixes.",
+  "description": "Nobleman Baileys - A fork of Baileys with additional features and fixes.",
   "type": "module",
   "license": "MIT",
   "author": "Ren-AI",
