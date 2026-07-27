@@ -62,6 +62,7 @@ import { USyncQuery, USyncUser } from '../WAUSync/'
 import { WebSocketClient } from './Client'
 import { executeWMexQuery } from './mex.js'
 
+
 /**
  * Connects to WA servers and performs:
  * - simple queries (no retry mechanism, wait for connection establishment)
@@ -1115,6 +1116,8 @@ export const makeSocket = (config: SocketConfig) => {
 	const registerSocketEndHandler = (handler: (error: Error | undefined) => void | Promise<void>) => {
 		socketEndHandlers.push(handler)
 	}
+
+			
 
 	/**
 	 * Fetches your account's standing when it comes to restrictions.
