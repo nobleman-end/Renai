@@ -1,6 +1,6 @@
 {
   "name": "@nobleman-end/renai",
-  "version": "6.7.21-renai.1.0.0",
+  "version": "6.7.21-renai.1.0.1",
   "description": "Nobleman Baileys - A fork of Baileys with additional features and fixes.",
   "type": "module",
   "license": "MIT",
